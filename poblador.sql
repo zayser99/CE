@@ -45,3 +45,26 @@ INSERT INTO `carrera` (`carrea_id`, `carrea_nombre,`, `tipoca_id`, `facultad_id`
 INSERT INTO `carrera` (`carrea_id`, `carrea_nombre,`, `tipoca_id`, `facultad_id`) VALUES  (NULL, `ENFERMERIA`), (NULL `1`), (NULL `6`);
 INSERT INTO `carrera` (`carrea_id`, `carrea_nombre,`, `tipoca_id`, `facultad_id`) VALUES  (NULL, `NUTRICION`), (NULL `1`), (NULL `6`);
 INSERT INTO `carrera` (`carrea_id`, `carrea_nombre,`, `tipoca_id`, `facultad_id`) VALUES  (NULL, `EDUCACION FISICA Y DEPORTE`), (NULL `1`), (NULL `6`);
+
+-- Poblador documentos
+INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, `CURP`);
+INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, `CERTIFICADO DE PREPARATORIA`);
+INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, `ACTA DE NACIMIENTO`);
+INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, `CERTIFICADO DE PRIMARIA`);
+
+-- Ploblador almacen
+INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, `A`);
+INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, `B`);
+INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, `C`);
+
+-- Plobadores ec
+INSERT INTO `ec` (`ec_id`, `ec_numero`,`almacen_id`) VALUES (NULL, `11`),(`3`);
+
+-- Poblador alumnos
+INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, `130696`), (`ALAN FRANCISCO`), (`CERVANTES PEREZ`), (`1`);
+
+-- Poblador alumno_carrera
+INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`,`generacion`) VALUES (NULL, `1`),(`2018`);
+
+-- Ploblador documentos_alumno
+INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, `1`), (`1`), (`1`), (`B`);
