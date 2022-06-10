@@ -1,0 +1,1 @@
+INSERT INTO `tipocarrera` (`tipoca_id`, `tipoca_nombre`) VALUES (NULL, 'LICENCIATURA'), (NULL, 'MAESTRIA '), (NULL, 'BACHILLERATO');
