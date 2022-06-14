@@ -24,7 +24,7 @@ ENGINE = InnoDB;
 -- Table `alumno`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS alumno (
-  `alumno_id` INT NOT NULL AUTO_INCREMENT,
+  `alumno_id` CHAR(6) NOT NULL AUTO_INCREMENT,
   `alumno_matricula` INT(6) NULL,
   `alumno_nombre` VARCHAR(50) NULL,
   `alumno_apellido` VARCHAR(50) NULL,
@@ -92,7 +92,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS carrera_alumno (
   `carrera_id` INT NOT NULL,
-  `alumno_id` INT NOT NULL,
+  `alumno_id` CHAR(6) NOT NULL,
   `generacion` INT NULL,
   PRIMARY KEY (`carrera_id`, `alumno_id`),
     FOREIGN KEY (`carrera_id`)
@@ -111,7 +111,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS documentos_alumno (
   `documento_id` INT NOT NULL,
-  `alumno_id` INT NOT NULL,
+  `alumno_id` CHAR(6) NOT NULL,
   `cantidad` INT NULL,
   `estado` CHAR(1) NULL,
   PRIMARY KEY (`documento_id`, `alumno_id`),
@@ -149,7 +149,7 @@ CREATE TABLE IF NOT EXISTS modificacion (
   `modi_fecha` DATETIME NULL,
   `modi_detalle` VARCHAR(100) NULL,
   `usuario_id` INT,
-  `alumno_id` INT,
+  `alumno_id` CHAR(6),
   PRIMARY KEY (`modi_id`),
     FOREIGN KEY (`usuario_id`)
     REFERENCES `usuarios` (`usuario_id`)
