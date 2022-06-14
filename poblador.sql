@@ -61,12 +61,6 @@ INSERT INTO `ec` (`ec_id`, `ec_numero`,`almacen_id`) VALUES (NULL, '11','3');
 -- Poblador alumnos
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '130696','ALAN FRANCISCO','CERVANTES PEREZ', '1');
 
--- Poblador alumno_carrera
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`,`generacion`) VALUES (NULL, '1','2018');
-
--- Ploblador documentos_alumno
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, '1', '1', '1','B');
-
 -- poblador alumno 1
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', '1');
@@ -77,3 +71,9 @@ INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estad
 -- poblador alumno 2
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('17', '5', '2006');
+
+-- -- Poblador alumno_carrera
+-- INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`,`generacion`) VALUES (NULL, '1','2018');
+
+-- -- Ploblador documentos_alumno
+-- INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, '1', '1', '1','B');
