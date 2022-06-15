@@ -1,6 +1,9 @@
 $(document).ready(function () {
+    //inicializar los pop over
+
     var user_id, opcion;
 
+    //inicializar la tabla alumnos
     tablaAlumnos = $('#tablaAlumnos').DataTable({
         "bProcessing": true,
         "bDeferRender": true,
@@ -12,7 +15,7 @@ $(document).ready(function () {
         },
         {
             "targets": -2,
-            "defaultContent": "<div class='wrapper text-center'><button class='btn btn-secondary btn-sm btnDocumentos' data-toggle='tooltip' title='Documentos'><i class='material-icons'>Documentos</i></button></div>"
+            "defaultContent": "<button type='button' class='btn btn-secondary' data-bs-toggle='popover' data-bs-placement='bottom' title='Documentos'data-bs-content='Lista de Documentos'>DOCUMENTOS</button>"
         },
         {
             "targets": -3,
@@ -38,7 +41,7 @@ $(document).ready(function () {
 
     var fila; //captura la fila, para editar o eliminar
     //submit para el Alta y Actualización
-    $('#formUsuarios').submit(function (e) {
+    $('#formAlumnos').submit(function (e) {
         e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
         username = $.trim($('#username').val());
         first_name = $.trim($('#first_name').val());
@@ -62,10 +65,10 @@ $(document).ready(function () {
     $("#btnNuevo").click(function () {
         opcion = 1; //alta           
         user_id = null;
-        $("#formUsuarios").trigger("reset");
-        $(".modal-header").css("background-color", "#17a2b8");
+        $("#formAlumnos").trigger("reset");
+        $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
-        $(".modal-title").text("Alta de Usuario");
+        $(".modal-title").text("Alta de Alumno");
         $('#modalCRUD').modal('show');
     });
 
@@ -111,4 +114,9 @@ $(document).ready(function () {
         }
     });
 
-});    
+    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+
+});
+
