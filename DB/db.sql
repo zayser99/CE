@@ -38,9 +38,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentos`
+-- Table `documento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS documentos (
+CREATE TABLE IF NOT EXISTS documento (
   `documento_id` INT NOT NULL AUTO_INCREMENT,
   `documento_nombre` VARCHAR(100) NULL,
   PRIMARY KEY (`documento_id`))
@@ -107,16 +107,16 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `documentos_alumno`
+-- Table `documento_alumno`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS documentos_alumno (
+CREATE TABLE IF NOT EXISTS documento_alumno (
   `documento_id` INT NOT NULL,
   `alumno_id` INT NOT NULL,
   `cantidad` INT NULL,
   `estado` CHAR(1) NULL,
   PRIMARY KEY (`documento_id`, `alumno_id`),
     FOREIGN KEY (`documento_id`)
-    REFERENCES `documentos` (`documento_id`)
+    REFERENCES `documento` (`documento_id`)
     ON DELETE CASCADE
     ON UPDATE CASCADE,
     FOREIGN KEY (`alumno_id`)
@@ -127,9 +127,9 @@ ENGINE = InnoDB;
 
 
 -- -----------------------------------------------------
--- Table `usuarios`
+-- Table `usuario`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS usuarios (
+CREATE TABLE IF NOT EXISTS usuario (
   `usuario_id` INT NOT NULL AUTO_INCREMENT,
   `usuario_username` VARCHAR(50) NULL,
   `usuario_password` TEXT NULL,
@@ -152,7 +152,7 @@ CREATE TABLE IF NOT EXISTS modificacion (
   `alumno_id` INT,
   PRIMARY KEY (`modi_id`),
     FOREIGN KEY (`usuario_id`)
-    REFERENCES `usuarios` (`usuario_id`)
+    REFERENCES `usuario` (`usuario_id`)
     ON DELETE SET NULL
     ON UPDATE SET NULL,
     FOREIGN KEY (`alumno_id`)
