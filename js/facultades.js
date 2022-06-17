@@ -68,7 +68,7 @@ $(document).ready(function () {
         facultad_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
         facultad_nombre = fila.find('td:eq(1)').text();
         $("#facultad_nombre").val(facultad_nombre);
-        $(".modal-header").css("background-color", "#007bff");
+        $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
         $(".modal-title").text("Editar Facultad");
         $('#modalCRUD').modal('show');

@@ -89,7 +89,7 @@ $(document).ready(function () {
         $("#gender").val(gender);
         $("#password").val(password);
         $("#status").val(status);
-        $(".modal-header").css("background-color", "#007bff");
+        $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
         $(".modal-title").text("Editar Usuario");
         $('#modalCRUD').modal('show');

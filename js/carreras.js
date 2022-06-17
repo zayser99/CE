@@ -78,7 +78,7 @@ $(document).ready(function () {
         tablaCarreras.column(2).visible(0);   
         tablaCarreras.column(3).visible(0);    
         $("#carrera_nombre").val(carrera_nombre);
-        $(".modal-header").css("background-color", "#007bff");
+        $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
         $(".modal-title").text("Editar Facultad");
         $('#modalCRUD').modal('show');
