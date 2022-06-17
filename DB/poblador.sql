@@ -44,11 +44,11 @@ INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id
 INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'NUTRICION','1','6');
 INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'EDUCACION FISICA Y DEPORTE','1','6');
 
--- Poblador documentos
-INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CURP');
-INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PREPARATORIA');
-INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, 'ACTA DE NACIMIENTO');
-INSERT INTO `documentos` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PRIMARIA');
+-- Poblador documento
+INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CURP');
+INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PREPARATORIA');
+INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'ACTA DE NACIMIENTO');
+INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PRIMARIA');
 
 -- Ploblador almacen
 INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, 'A');
@@ -65,37 +65,37 @@ INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('10', '4', '2006');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('4', '4', '1', 'B');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('6', '4', '1', 'B'), ('5', '4', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('4', '4', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('6', '4', '1', 'B'), ('5', '4', '1', 'B');
 
 -- poblador alumno 2
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('17', '3', '2006');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('3', '3', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('3', '3', '1', 'B');
 
 -- poblador alumno 3
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050022', 'DANIELA', 'TELLEZ-SILL SANTILLAN', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('30', '4', '2005');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '4', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '4', '1', 'B');
 
 -- poblador alumno 4
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050028', 'JORGUE MIGUEL', 'TRUJILLO CRISOSTOMO', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('30', '5', '2005');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '5', '1', 'B'), ('1', '5', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '5', '1', 'B'), ('1', '5', '1', 'B');
 
 -- poblador alumno 5
 
 INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050031', 'JOSE DEL JESUS', 'DE LA CRUZ HERNANDEZ', '1');
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('15', '6', '2005');
-INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '6', '1', 'B');
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '6', '1', 'B');
 
 
 
 -- -- Poblador alumno_carrera
 -- INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`,`generacion`) VALUES (NULL, '1','2018');
 
--- -- Ploblador documentos_alumno
--- INSERT INTO `documentos_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, '1', '1', '1','B');
+-- -- Ploblador documento_alumno
+-- INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, '1', '1', '1','B');
