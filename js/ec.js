@@ -104,9 +104,9 @@ $(document).ready(function () {
 
     // llenamos los combobox EC
     var selectorFacultades = document.getElementById("selectAlmacen"); // identificamos el combobox
-    $.getJSON('serverside/serversideEc.php', function (results) {// consultamos las facultades 
+    $.getJSON('serverside/serversideAlmacenes.php', function (results) {// consultamos las facultades 
         for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data 
-            selectorFacultades.options[i] = new Option(results['aaData'][i][1], results['aaData'][i][0]); //agregamos el renglon por cada registro
+            selectorFacultades.options[i] = new Option(results['aaData'][i][0], results['aaData'][i][0]); //agregamos el renglon por cada registro
         }
     });
 
