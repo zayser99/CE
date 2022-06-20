@@ -1,101 +1,108 @@
-INSERT INTO `tipocarrera` (`tipoca_id`, `tipoca_nombre`) VALUES (NULL, 'LICENCIATURA'), (NULL, 'MAESTRIA '), (NULL, 'BACHILLERATO');
+-- Poblador almacen #1
+INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES
+(1, 'A'),
+(2, 'B'),
+(3, 'C');
 
--- Poblador facultad
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'DERECHO');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'MEDICINA');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'CIENCIAS ECONOMICAS ADMINISTRATIVAS');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'CIENCIAS DE LA INFORMACION');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'CIENCIAS EDUCATIVAS');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'QUIMICA');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'INGENIERIA');
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES  (NULL, 'CIENCIAS NATURALES EXACTAS');
+-- Poblador alumno #2
+
+INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES
+(1, '130696', 'ALAN FRANCISCO', 'CERVANTES PEREZ', 1),
+(2, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', 1),
+(3, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', 1),
+(4, '050022', 'DANIELA', 'TELLEZ-SILL SANTILLAN', 1),
+(5, '050028', 'JORGUE MIGUEL', 'TRUJILLO CRISOSTOMO', 1),
+(6, '050031', 'JOSE DEL JESUS', 'DE LA CRUZ HERNANDEZ', 1);
+
+-- Poblador carrera #3
+
+INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES
+(1, 'CRIMINOLOGIA Y CRIMINALISTICA', 1, 1),
+(2, 'DERECHO', 1, 1),
+(3, 'BIOLOGIA MARINA', 1, 8),
+(4, 'EDUCACION', 1, 5),
+(5, 'LENGUA INGLESA', 1, 5),
+(6, 'COMUNICACION Y GESTION CULTURAL', 1, 5),
+(7, 'INGENIERIA QUIMICA', 1, 6),
+(8, 'INGENIERIA PETROLERA', 1, 6),
+(9, 'INGENIERIA GEOLOGICA', 1, 6),
+(10, 'INGENIERIA EN SISTEMA COMPUTACIONALES', 1, 4),
+(11, 'DISEÑO MULTIMEDIA', 1, 4),
+(12, 'TECNOLOGIAS DE COMPUTO Y COMUNICACIONES', 1, 4),
+(13, 'ADMINISTRACION DE EMPRESAS', 1, 3),
+(14, 'CONTADUIRIA', 1, 3),
+(15, 'ADMINISTRACION TURISTICA', 1, 3),
+(16, 'MERCADOTECNIA', 1, 3),
+(17, 'NEGOCIOS INTERNACIONALES', 1, 3),
+(18, 'INGENIERIA MECATRONICA', 1, 7),
+(19, 'INGENIERIA CIVIL', 1, 7),
+(20, 'INGENIERIA MECANICA', 1, 7),
+(21, 'INGENIERIA GEOFISICA', 1, 7),
+(22, 'INGENIERIA EN ENERGIA', 1, 7),
+(23, 'ARQUITECTURA SUSTENTABLE', 1, 7),
+(24, 'MEDICINA', 1, 2),
+(25, 'PSICOLOGIA', 1, 2),
+(26, 'FISIOTERAPIA', 1, 2),
+(27, 'ENFERMERIA', 1, 2),
+(28, 'NUTRICION', 1, 2),
+(29, 'EDUCACION FISICA Y DEPORTE', 1, 2),
+(30, 'CAMPUS II', 3, 9),
+(31, 'CAMPUS SABANCUY', 3, 9);
+
+-- poblador carrera_alumno #4
+
+INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES
+(10, 1, 2018),
+(15, 6, 2005),
+(17, 3, 2006),
+(30, 1, 2013),
+(30, 4, 2005),
+(30, 5, 2005);
+
+-- poblador documento #5
+
+INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES
+(1, 'CURP'),
+(2, 'CERTIFICADO DE PREPARATORIA'),
+(3, 'ACTA DE NACIMIENTO'),
+(4, 'CERTIFICADO DE PRIMARIA');
+
+-- poblador documento_alumnos #6
+
+INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES
+(1, 5, 1, 'B'),
+(2, 4, 1, 'B'),
+(2, 5, 1, 'B'),
+(2, 6, 1, 'B'),
+(3, 3, 1, 'B'),
+(4, 2, 1, 'B');
+
+--poblador ec #7
+
+INSERT INTO `ec` (`ec_id`, `ec_numero`, `almacen_id`) VALUES
+(1, '11', 3);
+
+-- poblador facultad #8
+
+INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES
+(1, 'DERECHO'),
+(2, 'MEDICINA'),
+(3, 'CIENCIAS ECONOMICAS ADMINISTRATIVAS'),
+(4, 'CIENCIAS DE LA INFORMACION'),
+(5, 'CIENCIAS EDUCATIVAS'),
+(6, 'QUIMICA'),
+(7, 'INGENIERIA'),
+(8, 'CIENCIAS NATURALES EXACTAS'),
+(9, 'PREPARATORIA');
 
 
--- poblador carrera
+-- poblador tipocarrera #9
 
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'CRIMINOLOGIA Y CRIMINALISTICA','1','1');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'DERECHO','1','1');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'BIOLOGIA MARINA','1','8');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'EDUCACION','1','4');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'LENGUA INGLESA','1','4');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'COMUNICACION Y GESTION CULTURAL','1','4');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA QUIMICA','1','5');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA PETROLERA','1','5');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA GEOLOGICA','1','5');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA EN SISTEMA COMPUTACIONALES','1','2');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'DISEÑO MULTIMEDIA','1','2');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'TECNOLOGIAS DE COMPUTO Y COMUNICACIONES','1','2');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'ADMINISTRACION DE EMPRESAS','1','3');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'CONTADUIRIA','1','3');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'ADMINISTRACION TURISTICA','1','3');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'MERCADOTECNIA','1','3');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'NEGOCIOS INTERNACIONALES','1','3');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA MECATRONICA','1','7');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA CIVIL','1','7');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA MECANICA','1','7');
-
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA GEOFISICA','1','7');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'INGENIERIA EN ENERGIA','1','7');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'ARQUITECTURA SUSTENTABLE','1','7');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'MEDICINA','1','6');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'PSICOLOGIA','1','6');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'FISIOTERAPIA','1','6');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'ENFERMERIA','1','6');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'NUTRICION','1','6');
-INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES  (NULL, 'EDUCACION FISICA Y DEPORTE','1','6');
-
--- Poblador documento
-INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CURP');
-INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PREPARATORIA');
-INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'ACTA DE NACIMIENTO');
-INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES (NULL, 'CERTIFICADO DE PRIMARIA');
-
--- Ploblador almacen
-INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, 'A');
-INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, 'B');
-INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES (NULL, 'C');
-
--- Plobadores ec
-INSERT INTO `ec` (`ec_id`, `ec_numero`,`almacen_id`) VALUES (NULL, '11','3');
-
--- Poblador alumnos
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '130696','ALAN FRANCISCO','CERVANTES PEREZ', '1');
-
--- poblador alumno 1
-
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', '1');
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('10', '4', '2006');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('4', '4', '1', 'B');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('6', '4', '1', 'B'), ('5', '4', '1', 'B');
-
--- poblador alumno 2
-
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', '1');
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('17', '3', '2006');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('3', '3', '1', 'B');
-
--- poblador alumno 3
-
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050022', 'DANIELA', 'TELLEZ-SILL SANTILLAN', '1');
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('30', '4', '2005');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '4', '1', 'B');
-
--- poblador alumno 4
-
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050028', 'JORGUE MIGUEL', 'TRUJILLO CRISOSTOMO', '1');
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('30', '5', '2005');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '5', '1', 'B'), ('1', '5', '1', 'B');
-
--- poblador alumno 5
-
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES (NULL, '050031', 'JOSE DEL JESUS', 'DE LA CRUZ HERNANDEZ', '1');
-INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES ('15', '6', '2005');
-INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES ('2', '6', '1', 'B');
+INSERT INTO `tipocarrera` (`tipoca_id`, `tipoca_nombre`) VALUES
+(1, 'LICENCIATURA'),
+(2, 'MAESTRIA '),
+(3, 'BACHILLERATO');
 
 
 
--- -- Poblador alumno_carrera
--- INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`,`generacion`) VALUES (NULL, '1','2018');
 
--- -- Ploblador documento_alumno
--- INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`,`cantidad`,`estado`) VALUES (NULL, '1', '1', '1','B');
