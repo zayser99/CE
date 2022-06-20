@@ -4,17 +4,37 @@ INSERT INTO `almacen` (`almacen_id`, `almacen_sala`) VALUES
 (2, 'B'),
 (3, 'C');
 
--- Poblador alumno #2
+-- poblador ec #2
 
-INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES
-(1, '130696', 'ALAN FRANCISCO', 'CERVANTES PEREZ', 1),
-(2, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', 1),
-(3, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', 1),
-(4, '050022', 'DANIELA', 'TELLEZ-SILL SANTILLAN', 1),
-(5, '050028', 'JORGUE MIGUEL', 'TRUJILLO CRISOSTOMO', 1),
-(6, '050031', 'JOSE DEL JESUS', 'DE LA CRUZ HERNANDEZ', 1);
+INSERT INTO `ec` (`ec_id`, `ec_numero`, `almacen_id`) VALUES
+(1, '11', 1),
+(2, '12', 3);
 
--- Poblador carrera #3
+
+-- poblador tipocarrera #3
+
+INSERT INTO `tipocarrera` (`tipoca_id`, `tipoca_nombre`) VALUES
+(1, 'LICENCIATURA'),
+(2, 'MAESTRIA '),
+(3, 'BACHILLERATO');
+
+
+
+-- poblador facultad #4
+
+INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES
+(1, 'DERECHO'),
+(2, 'MEDICINA'),
+(3, 'CIENCIAS ECONOMICAS ADMINISTRATIVAS'),
+(4, 'CIENCIAS DE LA INFORMACION'),
+(5, 'CIENCIAS EDUCATIVAS'),
+(6, 'QUIMICA'),
+(7, 'INGENIERIA'),
+(8, 'CIENCIAS NATURALES EXACTAS'),
+(9, 'PREPARATORIA');
+
+
+-- Poblador carrera #5
 
 INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id`) VALUES
 (1, 'CRIMINOLOGIA Y CRIMINALISTICA', 1, 1),
@@ -49,7 +69,19 @@ INSERT INTO `carrera` (`carrera_id`, `carrera_nombre`, `tipoca_id`, `facultad_id
 (30, 'CAMPUS II', 3, 9),
 (31, 'CAMPUS SABANCUY', 3, 9);
 
--- poblador carrera_alumno #4
+
+-- Poblador alumno #6
+
+INSERT INTO `alumno` (`alumno_id`, `alumno_matricula`, `alumno_nombre`, `alumno_apellido`, `ec_id`) VALUES
+(1, '130696', 'ALAN FRANCISCO', 'CERVANTES PEREZ', 1),
+(2, '050004', 'LUIS ELIAZAR', 'VELUETA CHAN', 1),
+(3, '050020', 'FABIOLA', 'LOPEZ MARTINEZ', 1),
+(4, '050022', 'DANIELA', 'TELLEZ-SILL SANTILLAN', 1),
+(5, '050028', 'JORGUE MIGUEL', 'TRUJILLO CRISOSTOMO', 1),
+(6, '050031', 'JOSE DEL JESUS', 'DE LA CRUZ HERNANDEZ', 1);
+
+
+-- poblador carrera_alumno #7
 
 INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES
 (10, 1, 2018),
@@ -59,7 +91,7 @@ INSERT INTO `carrera_alumno` (`carrera_id`, `alumno_id`, `generacion`) VALUES
 (30, 4, 2005),
 (30, 5, 2005);
 
--- poblador documento #5
+-- poblador documento #8
 
 INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES
 (1, 'CURP'),
@@ -67,7 +99,7 @@ INSERT INTO `documento` (`documento_id`, `documento_nombre`) VALUES
 (3, 'ACTA DE NACIMIENTO'),
 (4, 'CERTIFICADO DE PRIMARIA');
 
--- poblador documento_alumnos #6
+-- poblador documento_alumnos #9
 
 INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado`) VALUES
 (1, 5, 1, 'B'),
@@ -77,31 +109,6 @@ INSERT INTO `documento_alumno` (`documento_id`, `alumno_id`, `cantidad`, `estado
 (3, 3, 1, 'B'),
 (4, 2, 1, 'B');
 
---poblador ec #7
-
-INSERT INTO `ec` (`ec_id`, `ec_numero`, `almacen_id`) VALUES
-(1, '11', 3);
-
--- poblador facultad #8
-
-INSERT INTO `facultad` (`facultad_id`, `facultad_nombre`) VALUES
-(1, 'DERECHO'),
-(2, 'MEDICINA'),
-(3, 'CIENCIAS ECONOMICAS ADMINISTRATIVAS'),
-(4, 'CIENCIAS DE LA INFORMACION'),
-(5, 'CIENCIAS EDUCATIVAS'),
-(6, 'QUIMICA'),
-(7, 'INGENIERIA'),
-(8, 'CIENCIAS NATURALES EXACTAS'),
-(9, 'PREPARATORIA');
-
-
--- poblador tipocarrera #9
-
-INSERT INTO `tipocarrera` (`tipoca_id`, `tipoca_nombre`) VALUES
-(1, 'LICENCIATURA'),
-(2, 'MAESTRIA '),
-(3, 'BACHILLERATO');
 
 
 
