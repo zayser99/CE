@@ -67,7 +67,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -97,50 +97,81 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="" class="col-form-label">BODEGA</label>
-                                    <input type="text" class="form-control" id="password">
+                                    <label for="" class="col-form-label">BOGEGA:</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selectBodega">
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-6">
                                 <div class="form-group">
-                                    <label for="" class="col-form-label">EC</label>
-                                    <input type="number" class="form-control" id="status">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">CARRERA</label>
-                                    <input type="text" class="form-control" id="carr">
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">CANTIDAD</label>
-                                    <input type="number" class="form-control" id="cant">
+                                    <label for="" class="col-form-label">EC:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectEC">
+                                    </select>
                                 </div>
                             </div>
                         </div>
+
+                        <hr> <!--  linea divisora  -->
                         <div class="row">
-                            <div class="col-lg-9">
+                            <div class="col-lg-5">
                                 <div class="form-group">
-                                    <label for="" class="col-form-label">DOCUMENTOS</label>
-                                    <input type="text" class="form-control" id="docs">
+                                    <label for="" class="col-form-label">FACULTAD:</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selectFacultades">
+                                    </select>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                            <div class="col-lg-5">
                                 <div class="form-group">
-                                    <label for="" class="col-form-label">CANTIDAD</label>
-                                    <input type="number" class="form-control" id="cantdoc">
+                                    <label for="" class="col-form-label">CARRERA:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectCarreras">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-lg-2">
+                                <div class="row align-items-center">
+                                    <label for="" class="col-form-label">AGREGAR:</label>
+                                    <button class='btn btn-outline-success btn-sm btnAddcarrera' data-toggle='tooltip'
+                                        title='btnAddcarrera'>
+                                        <span class='material-icons'>+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <hr> <!--  linea divisora  -->
+                        <div class="row">
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">DOCUMENTO:</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selectDocumentos">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-5">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">CANTIDAD:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectCantidad">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-2">
+                                <div class="row align-items-center">
+                                    <label for="" class="col-form-label">AGREGAR:</label>
+                                    <button class='btn btn-outline-success btn-sm btnAddDocomento' data-toggle='tooltip'
+                                        title='btnAddDocomento'>
+                                        <span class='material-icons'>+</span>
+                                    </button>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
                     </div>
                 </form>
@@ -148,10 +179,48 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-placement="bottom" title="Documentos"
-        data-bs-content="Lista de Documentos">
-        DOCUMENTOS
-    </button>
+
+    <!--Modal para documentos-->
+    <div class="modal fade" id="modalDocumentos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyDocumentos">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal para carreras-->
+    <div class="modal fade" id="modalCarreras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyCarreras">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- Jquery -->
@@ -172,3 +241,14 @@
 </body>
 
 </html>
+
+
+
+<div class='wrapper text-center'>
+    <div class='btn-group'>
+        <button class='btn btn-info btn-sm btnEditar' data-toggle='tooltip' title='Editar'>
+            <i class='material-icons'>Editar</i>
+        </button>
+
+    </div>
+</div>

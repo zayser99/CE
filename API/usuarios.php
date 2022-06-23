@@ -16,7 +16,7 @@ $usuario_id = (isset($_POST['usuario_id'])) ? $_POST['usuario_id'] : '';
 
 switch ($opcion) {
     case 1: //agregar
-        $consulta = "INSERT INTO ec (usuario_id, usuario_username, usuario_password, usuario_puesto) VALUES(null, '$usuario_username', '$usuario_password', '$usuario_puesto) ";   //generamos el insert
+        $consulta = "INSERT INTO usuario (usuario_id, usuario_username, usuario_password, usuario_puesto) VALUES(null, '$usuario_username', '$usuario_password', '$usuario_puesto') ";   //generamos el insert
         $resultado = $conexion->prepare($consulta); // lo ejeutamos
         $resultado->execute();
 

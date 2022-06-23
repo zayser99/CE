@@ -15,11 +15,11 @@ $(document).ready(function () {
         },
         {
             "targets": -2,
-            "defaultContent": "<button type='button' class='btn btn-secondary' data-bs-toggle='popover' data-bs-placement='bottom' title='Documentos'data-bs-content='Lista de Documentos'>DOCUMENTOS</button>"
+            "defaultContent": "<div class='wrapper text-center'><div class='btn-group'><button class='btn btn-secondary btn-sm btnDocumentos' data-toggle='tooltip' title='Documentos'><span class='material-icons'>Documentos</span></button></div></div>"
         },
         {
             "targets": -3,
-            "defaultContent": "<div class='wrapper text-center'><button class='btn btn-secondary btn-sm btnCarreras' data-toggle='tooltip' title='Carreras'><i class='material-icons'>Carreras</i></button></div>"
+            "defaultContent": "<div class='wrapper text-center'><div class='btn-group'><button class='btn btn-secondary btn-sm btnCarreras' data-toggle='tooltip' title='Carreras'><span class='material-icons'>Carreras</span></button></div></div>"
         }
         ],
         "language": {
@@ -114,8 +114,63 @@ $(document).ready(function () {
         }
     });
 
-    const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
-    const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
+
+
+    //para mostrarlos documentos
+    $(document).on("click", ".btnDocumentos", function () {
+        fila = $(this).closest("tr");
+        alumno_id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        nombre = fila.find('td:eq(2)').text();
+        $.ajax({
+            url: "API/alumnos_documentos.php",
+            type: "POST",
+            datatype: "json",
+            data: { alumno_id: alumno_id },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {//recorremos la data 
+                    console.log(['cantidad'][i]);
+                }
+
+                $("#bodyDocumentos").text(data);
+                console.log(data);
+            }
+        });
+
+        $(".modal-header").css("background-color", "#512DA8");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Documentos del  alumno: " + nombre);
+        $('#modalDocumentos').modal('show');
+    });
+
+
+
+    //para mostrarlos documentos
+    $(document).on("click", ".btnCarreras", function () {
+        fila = $(this).closest("tr");
+        alumno_id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        nombre = fila.find('td:eq(2)').text();
+        $.ajax({
+            url: "API/alumnos_Carreras.php",
+            type: "POST",
+            datatype: "json",
+            data: { alumno_id: alumno_id },
+            success: function (data) {
+                for (var i = 0; i < data.length; i++) {//recorremos la data 
+                    console.log(['cantidad'][i]);
+                }
+
+                $("#bodyCarreras").text(data);
+                console.log(data);
+            }
+        });
+
+        $(".modal-header").css("background-color", "#512DA8");
+        $(".modal-header").css("color", "white");
+        $(".modal-title").text("Carreras del  alumno: " + nombre);
+        $('#modalCarreras').modal('show');
+    });
+
+
 
 
 });

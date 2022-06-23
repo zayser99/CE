@@ -4,18 +4,33 @@ $(document).ready(function () {
     var usuario_id, opcion;
 
     //inicializar la tabla Usuario
-    tablaUsuario = $('#tablaUsuario').DataTable({
+    tablaUsuarios = $('#tablaUsuarios').DataTable({
         "bProcessing": true,
         "bDeferRender": true,
         "bServerSide": true,
-        "sAjaxSource": "serverside/serversideUsuario.php",
+        "sAjaxSource": "serverside/serversideUsuarios.php",
         "columnDefs": [{
             sortable: false, //desactivamos el ordenamiento a los botones de eliminar y editar
             "searchable": false,  //quitamos de las bosquedas a los botones de eliminar y editar
             "targets": -1,
             "defaultContent": "<div class='wrapper text-center'><div class='btn-group'><button class='btn btn-info btn-sm btnEditar' data-toggle='tooltip' title='Editar'><i class='material-icons'>Editar</i></button><button class='btn btn-danger btn-sm btnBorrar' data-toggle='tooltip' title='Eliminar'><span class='material-icons'>Eliminar</span></button></div></div>"
+
         }
         ],
+        "rowCallback": function (row, data) {
+            if (data[2] == "A") {
+                $('td:eq(2)', row).html('<div class="wrapper text-center"><span class="badge rounded-pill text-bg-primary">ADMINISTRATIV@</span></div>');
+
+            }
+            else if (data[2] == "B") {
+                $('td:eq(2)', row).html('<div class="wrapper text-center"><span class="badge rounded-pill text-bg-success">SECRETARI@</span></div>');
+
+            }
+            else if (data[2] == "C") {
+                $('td:eq(2)', row).html('<div class="wrapper text-center"><span class="badge rounded-pill text-bg-secondary">BECARI@</span></div>');
+
+            }
+        },
         "language": {
             "lengthMenu": "Mostrar _MENU_ registros",
             "zeroRUsuarioords": "No se encontraron resultados",
@@ -35,18 +50,21 @@ $(document).ready(function () {
 
     var fila; //captura la fila, para editar o eliminar
     //submit para el Alta y Actualización
-    $('#formUsuario').submit(function (e) {
+    $('#formUsuarios').submit(function (e) {
         e.preventDefault(); //evita el comportambiento normal del submit, es dUsuarioir, rUsuarioarga total de la página
         usuario_username = $.trim($('#usuario_username').val());
         usuario_password = $.trim($('#usuario_password').val());
-        usuario_puesto = $.trim($('#usuario_puesto').val());
+        usuario_puesto = $.trim($('#selectUsuario').val());
+        console.log(usuario_username);
+        console.log(usuario_password);
+        console.log(usuario_puesto);
         $.ajax({
-            url: "API/Usuario.php",
+            url: "API/usuarios.php",
             type: "POST",
             datatype: "json",
             data: { usuario_id: usuario_id, usuario_username: usuario_username, usuario_password: usuario_password, usuario_puesto: usuario_puesto, opcion: opcion },
             success: function (data) {
-                tablaUsuario.ajax.reload(null, false);
+                tablaUsuarios.ajax.reload(null, false);
             }
         });
         $('#modalCRUD').modal('hide');
@@ -71,15 +89,11 @@ $(document).ready(function () {
         fila = $(this).closest("tr");
         usuario_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
         usuario_username = fila.find('td:eq(1)').text();
-        usuario_password = fila.find('td:eq(2)').text();
-        usuario_puesto = fila.find('td:eq(3)').text();
-        tablaUsuario.column(2).visible(2);
-        document.getElementById("selUsuariotAlmacen").value = fila.find('td:eq(2)').text();
-        tablaUsuario.column(2).visible(0);
-        $("#Usuario_numero").val(usuario_username);
+        // document.getElementById("selectUsuarios").value = fila.find('td:eq(2)').text();
+        $("#usuario_username").val(usuario_username);
         $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
-        $(".modal-title").text("Editar Estante o Caja");
+        $(".modal-title").text("Editar Facultad");
         $('#modalCRUD').modal('show');
     });
 
@@ -91,23 +105,22 @@ $(document).ready(function () {
         var respuesta = confirm("¿Está seguro de borrar el registro " + usuario_id + "?");
         if (respuesta) {
             $.ajax({
-                url: "API/usuario.php",
+                url: "API/usuarios.php",
                 type: "POST",
                 datatype: "json",
-                data: { opcion: opcion, usuario_id: Usuario_id },
+                data: { usuario_id: usuario_id, usuario_username: usuario_username, usuario_password: usuario_password, usuario_puesto: usuario_puesto, opcion: opcion },
                 success: function () {
-                    tablaUsuario.row(fila.parents('tr')).remove().draw();
+                    tablaUsuarios.row(fila.parents('tr')).remove().draw();
                 }
             });
         }
     });
 
-
-
     // llenamos los combobox Usuario
-    var selUsuariotorFacultades = document.getElementById("selUsuariotAlmacen"); // identificamos el combobox
-    selUsuariotorFacultades.options[i] = new Option("lo que mostramos", "lo que vale"); //agregamos el renglon por cada registro
-    selUsuariotorFacultades.options[i] = new Option("lo que mostramos", "lo que vale"); //agregamos el renglon por cada registro
+    var selectUsuario = document.getElementById("selectUsuario"); // identificamos el combobox
+    selectUsuario.options[0] = new Option("ADMINISTRATIV@", "A"); //agregamos el renglon por cada registro
+    selectUsuario.options[1] = new Option("SECRETARI@", "B"); //agregamos el renglon por cada registro
+    selectUsuario.options[2] = new Option("BECARI@", "B"); //agregamos el renglon por cada registro
 
 
 
