@@ -173,5 +173,43 @@ $(document).ready(function () {
 
 
 
+
+
+
+    //////////////////////////////////CARRERAS Y FACULTADES ////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    var selectorFacultades = document.getElementById("selectFacultades"); // identificamos el combobox de facultades 
+    // llenamos los combobox facultades
+    $.getJSON('serverside/serversideFacultades.php', function (results) {// consultamos las facultades 
+        var esprimero = true; //declaramos la bariable que no servira como bandera
+        for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data  de facultades
+            if (esprimero) { // si es la primera entnces la dejamos seleccionada 
+                $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                esprimero = false;//ponemos la bandera en falso 
+            }
+            else// todas las demas opciones quedan seleccionadas 
+                $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
+
+        }
+        llenarCarreras(selectorFacultades.value);// procedemos a llenar el combobox de carreras con la primera opcionen de facultades 
+    });
+
+    selectorFacultades.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de carrera con la nueva informacion 
+        llenarCarreras(e.target.value);
+    });
+
+    //llenamos los combobox carreras 
+    function llenarCarreras(idfacultad) {
+        $("#selectCarreras").find('option').remove();//limpia el select cada que cada que se ejucta el metodo para no tener datos erroneos 
+        $.getJSON('serverside/serversideCarreras.php', function (results) {// consultamos las carreras 
+            for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de carreras
+                if (results['aaData'][i][3] == idfacultad) {// si la informacion es de la facultas que queremos lo agregamos al select 
+                    $("#selectCarreras").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                }
+            }
+        });
+    }
+
+
 });
 
