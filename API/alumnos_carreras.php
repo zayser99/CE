@@ -4,7 +4,7 @@ $objeto = new conexion();
 $conexion = $objeto->Conectar();
 
 
- $alumno_id = (isset($_POST['alumno_id'])) ? $_POST['alumno_id'] : '';
+$alumno_id = (isset($_POST['alumno_id'])) ? $_POST['alumno_id'] : '';
 
 $consulta = "SELECT facultad_nombre, carrera_nombre, generacion FROM carrera_alumno NATURAL JOIN carrera NATURAL JOIN facultad WHERE alumno_id='$alumno_id' ";
 $resultado = $conexion->prepare($consulta);

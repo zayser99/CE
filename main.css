@@ -1,13 +1,13 @@
-header{
-    background:#512DA8;
+header {
+  background: #512DA8;
 }
 
 table.dataTable thead {
-    background:#1a237e;
-    color:white;
+  background: #1a237e;
+  color: white;
 }
 
-.caja{
+.caja {
   /* border: 1px solid; */
   padding: 5px;
   box-shadow: 10px 10px 50px 1px #7c7c81;
