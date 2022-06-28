@@ -45,6 +45,8 @@ $(document).ready(function () {
         }
     });
 
+    $('#modalCRUD').modal({ backdrop: 'static', keyboard: false }) //evita que se puedda cerra el modal picando afuera del mismo
+
     var fila; //captura la fila, para editar o eliminar
     //submit para el Alta y Actualización
     $('#formAlumnos').submit(function (e) {
@@ -120,8 +122,6 @@ $(document).ready(function () {
         }
     });
 
-
-
     //para mostrarlos documentos del alumno
     $(document).on("click", ".btnDocumentos", function () {
         fila = $(this).closest("tr");//localizamos la fila donde extrearemos los datos
@@ -138,14 +138,31 @@ $(document).ready(function () {
                 $("#listaDocumentos").find('li').remove();//limpia la lista de documenentos del modal
                 let documentos = JSON.parse(data);// parseamos de la api el string a json 
                 let lista = document.querySelector('#listaDocumentos'); // seleccionamos nuesta lista donde mostramos todo
-                for (const documento of documentos) {// recorremos el json y seguido hacemos un innerhtml para mostrar los datos 
-                    lista.innerHTML += `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                ${documento.documento_nombre}
-                <span class="badge rounded-pill text-bg-success">${documento.estado} BUEN ESTADO</span>
-                <span class="badge bg-primary rounded-pill">${documento.cantidad}</span>
-                </li>
-                `;
+                for (const documento of documentos) {// recorremos el json y seguido hacemos un innerhtml para mostrar los datos
+                    if (documento.estado == "A") {
+                        lista.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${documento.documento_nombre}
+                        <span class="badge rounded-pill text-bg-success">BUEN ESTADO</span>
+                        <span class="badge bg-primary rounded-pill">${documento.cantidad}</span>
+                        </li>`;
+                    } else if (documento.estado == "B") {
+                        lista.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${documento.documento_nombre}
+                        <span class="badge rounded-pill text-bg-warning">DAÑADO</span>
+                        <span class="badge bg-primary rounded-pill">${documento.cantidad}</span>
+                        </li>`;
+                    }
+                    else if (documento.estado == "C") {
+                        lista.innerHTML += `
+                        <li class="list-group-item d-flex justify-content-between align-items-center">
+                        ${documento.documento_nombre}
+                        <span class="badge rounded-pill text-bg-danger">ILEGIBLE</span>
+                        <span class="badge bg-primary rounded-pill">${documento.cantidad}</span>
+                        </li>`;
+                    }
+
                 }
             }
         });
@@ -193,8 +210,6 @@ $(document).ready(function () {
         $(".modal-title").text("Carreras del  alumno: " + nombre);
         $('#modalCarreras').modal('show');
     });
-
-
 
 
     // escondemos las filas donde estan las ID Que no queremos estar moestrando
