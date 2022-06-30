@@ -9,8 +9,6 @@ $documento_nombre = (isset($_POST['documento_nombre'])) ? $_POST['documento_nomb
 $opcion = (isset($_POST['opcion'])) ? $_POST['opcion'] : '';
 $documento_id = (isset($_POST['documento_id'])) ? $_POST['documento_id'] : '';
 
-
-
 switch ($opcion) {
     case 1: //agregar
         $consulta = "INSERT INTO documento (documento_id, documento_nombre) VALUES(null, '$documento_nombre') ";   //genramos el insert

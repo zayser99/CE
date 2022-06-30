@@ -79,7 +79,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">MATRICULA:</label>
-                                    <input type="text" class="form-control" id="username">
+                                    <input type="text" class="form-control" id="matricula">
                                 </div>
                             </div>
 
@@ -88,13 +88,13 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">NOMBRE:</label>
-                                    <input type="text" class="form-control" id="last_name">
+                                    <input type="text" class="form-control" id="nombre">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">APELLIDO:</label>
-                                    <input type="text" class="form-control" id="gender">
+                                    <input type="text" class="form-control" id="apellido">
                                 </div>
                             </div>
                         </div>
@@ -140,20 +140,30 @@
                             <div class="col-lg-8">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">GENERACION:</label>
-                                    <input type="number" id="selectCantidad" min="1900" max="2099" step="1" value="2022"
+                                    <input type="number" id="generacion" min="1900" max="2099" step="1" value="2022"
                                         class="form-control">
                                 </div>
                             </div>
                             <div class="col-lg-4">
                                 <div class="row align-items-center">
                                     <label for="" class="col-form-label">AGREGAR:</label>
-                                    <button class='btn btn-outline-success btn-sm btnAddcarrera' data-toggle='tooltip'
-                                        title='btnAddcarrera'>
+                                    <button type="button" class='btn btn-outline-success' id="btnAddCarrera"
+                                        data-toggle='tooltip' title='btnAddcarrera'>
                                         <span class='material-icons'>+</span>
                                     </button>
                                 </div>
                             </div>
                         </div>
+                        <div class="row">
+                            <label for="" class="col-form-label">LISTA: </label>
+                            <div class="col-lg-12">
+                                <ul class="list-group" id="listaCarrerasAdd">
+                                    <!--  lista de carreras  -->
+                                </ul>
+                            </div>
+                        </div>
+
+
                         <hr> <!--  linea divisora  -->
                         <h5>DOCUMENTOS</h5> <!-- titulo -->
                         <div class="row">
@@ -186,12 +196,22 @@
                             <div class="col-lg-3">
                                 <div class="row align-items-center">
                                     <label for="" class="col-form-label">AGREGAR:</label>
-                                    <button class='btn btn-outline-success btn-sm btnAddDocomento' data-toggle='tooltip'
-                                        title='btnAddDocomento'>
+                                    <button type="button" class='btn btn-outline-success' id="btnAddDocumento"
+                                        data-toggle='tooltip' title='btnAddDocumento'>
                                         <span class='material-icons'>+</span>
                                     </button>
                                 </div>
                             </div>
+                            <div class="row">
+                                <label for="" class="col-form-label">LISTA: </label>
+                                <div class="col-lg-12">
+                                    <ul class="list-group" id="listaDocumentosAdd">
+                                        <!--  lista de documentosP  -->
+
+                                    </ul>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">

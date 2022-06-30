@@ -1,6 +1,7 @@
 $(document).ready(function () {
     //inicializar los pop over
-
+    var listaDocumentos = [];
+    var listaCarreras = [];
     var user_id, opcion;
 
     //inicializar la tabla alumnos
@@ -51,26 +52,29 @@ $(document).ready(function () {
     //submit para el Alta y Actualización
     $('#formAlumnos').submit(function (e) {
         e.preventDefault(); //evita el comportambiento normal del submit, es decir, recarga total de la página
-        username = $.trim($('#username').val());
-        first_name = $.trim($('#first_name').val());
-        last_name = $.trim($('#last_name').val());
-        gender = $.trim($('#gender').val());
-        password = $.trim($('#password').val());
-        status = $.trim($('#status').val());
+        concatenarDataDocumentos();
+        concatenarDataCarreras();
+        matricula = $.trim($('#matricula').val());
+        nombre = $.trim($('#nombre').val());
+        apellido = $.trim($('#apellido').val());
+        ec = $.trim($('#selectEC').val());
         $.ajax({
-            url: "bd/crud.php",
+            url: "API/alumnos.php",
             type: "POST",
             datatype: "json",
-            data: { user_id: user_id, username: username, first_name: first_name, last_name: last_name, gender: gender, password: password, status: status, opcion: opcion },
+            data: { matricula: matricula, nombre: nombre, apellido: apellido, ec: ec, listaCarreras: concatenarDataCarreras(), listaDocumentos: concatenarDataDocumentos(), opcion: opcion },
             success: function (data) {
                 tablaAlumnos.ajax.reload(null, false);
             }
         });
         $('#modalCRUD').modal('hide');
+
     });
 
     //para limpiar los campos antes de dar de Alta una Persona
     $("#btnNuevo").click(function () {
+        $("#listaCarrerasAdd").find('li').remove();//limpiamos la lista de carreras para agregar 
+        $("#listaDocumentosAdd").find('li').remove();//limpiamos la lista de documentos para agregar
         opcion = 1; //alta           
         user_id = null;
         $("#formAlumnos").trigger("reset");
@@ -85,15 +89,15 @@ $(document).ready(function () {
         opcion = 2;//editar
         fila = $(this).closest("tr");
         user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-        username = fila.find('td:eq(1)').text();
-        first_name = fila.find('td:eq(2)').text();
-        last_name = fila.find('td:eq(3)').text();
+        matricula = fila.find('td:eq(1)').text();
+        nombre = fila.find('td:eq(2)').text();
+        apellido = fila.find('td:eq(3)').text();
         gender = fila.find('td:eq(4)').text();
         password = fila.find('td:eq(5)').text();
         status = fila.find('td:eq(6)').text();
-        $("#username").val(username);
-        $("#first_name").val(first_name);
-        $("#last_name").val(last_name);
+        $("#matricula").val(matricula);
+        $("#nombre").val(nombre);
+        $("#apellido").val(apellido);
         $("#gender").val(gender);
         $("#password").val(password);
         $("#status").val(status);
@@ -106,21 +110,135 @@ $(document).ready(function () {
     //Borrar
     $(document).on("click", ".btnBorrar", function () {
         fila = $(this);
-        user_id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        tablaAlumnos.column(0).visible(1);//ponemos visible el id para consultarlo
+        alumno_id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        tablaAlumnos.column(0).visible(0);//lo volvemos a ocultar
         opcion = 3; //eliminar        
         var respuesta = confirm("¿Está seguro de borrar el registro " + user_id + "?");
         if (respuesta) {
             $.ajax({
-                url: "bd/crud.php",
+                url: "API/alumnos.php",
                 type: "POST",
                 datatype: "json",
-                data: { opcion: opcion, user_id: user_id },
+                data: { opcion: opcion, alumno_id: alumno_id },
                 success: function () {
                     tablaAlumnos.row(fila.parents('tr')).remove().draw();
                 }
             });
         }
     });
+
+    /////////////////agregar carreras y documentos ////////////////////////////////////////////////////////////////////
+
+    $("#btnAddCarrera").click(function (clickEvent) {// evento de cuando apretamos el boton de agregar carrera 
+        var carrera = $('#selectCarreras option:selected').text();
+        var facultad = $('#selectFacultades option:selected').text();
+
+        var carreraId = $.trim($('#selectCarreras').val());
+        var facultadId = $.trim($('#selectFacultades').val());
+        var generacion = $.trim($('#generacion').val());
+        //los agregamos a los datos para subir 
+        listaCarreras.push('{"carrera_id":"' + carreraId + '","generacion":"' + generacion + '"}');
+        // lo mostramos
+        agregarCarreraAdd(carrera, facultad, generacion);
+    });
+
+    //agrega un renglon a la lista de documento
+    function agregarCarreraAdd(carrera, facultad, generacion) {
+        let lista = document.querySelector('#listaCarrerasAdd'); // seleccionamos nuesta lista donde mostramos todo
+        lista.innerHTML += ` 
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+        ${carrera} <BR>
+        ${facultad}
+        <span class="badge bg-primary rounded-pill">${generacion}</span>
+        </li>
+        `;
+
+    }
+
+    $("#btnAddDocumento").click(function (clickEvent) {// evento de cuando apretamos el boton de agregar documento 
+        var documento_nombre = $('#selectDocumentos option:selected').text();
+        var documento_id = $.trim($('#selectDocumentos').val());
+        var documento_cantidad = $.trim($('#selectCantidad').val());
+        var documento_estado = $.trim($('#selectEstados').val());
+
+        listaDocumentos.push('{"documento_id":"' + documento_id + '","cantidad":"' + documento_cantidad + '","estado":"' + documento_estado + '"}');
+        // lo mostramos
+        agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado);
+    });
+
+    //agrega un renglon a la lista de carreras
+    function agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado) {
+        let lista = document.querySelector('#listaDocumentosAdd'); // seleccionamos nuesta lista donde mostramos todo
+        if (documento_estado == "A") { //mostramos segun la condicion
+            lista.innerHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${documento_nombre}
+                <span class="badge rounded-pill text-bg-success">BUEN ESTADO</span>
+                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
+                </li>`;
+        } else if (documento_estado == "B") {
+            lista.innerHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${documento_nombre}
+                <span class="badge rounded-pill text-bg-warning">DAÑADO</span>
+                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
+                </li>`;
+        }
+        else if (documento_estado == "C") {
+            lista.innerHTML += `
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                ${documento_nombre}
+                <span class="badge rounded-pill text-bg-danger">ILEGIBLE</span>
+                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
+                </li>`;
+        }
+    }
+
+
+
+
+
+    //////////////// concatenadores
+
+    function concatenarDataDocumentos() {
+        var lista = '"listaDocumentos":[';
+        var bandera = true;
+        listaDocumentos.forEach((i) => {
+            if (bandera) {
+                lista += i;
+                bandera = false;
+            } else {
+                lista += ',';
+                lista += i;
+            }
+        })
+        lista += ']';
+        return lista;
+    }
+
+    function concatenarDataCarreras() {
+        var lista = '"listaCarreras":[';
+        var bandera = true;
+        listaCarreras.forEach((i) => {
+            if (bandera) {
+                lista += i;
+                bandera = false;
+            } else {
+                lista += ',';
+                lista += i;
+            }
+        })
+        lista += ']';
+        return lista;
+    }
+
+
+
+
+
+    //////////////////  botones de moestrar careras y documentos///////////////////////////////////////////////////////////////
+
 
     //para mostrarlos documentos del alumno
     $(document).on("click", ".btnDocumentos", function () {
@@ -172,8 +290,6 @@ $(document).ready(function () {
         $(".modal-title").text("Documentos del  alumno: " + nombre);
         $('#modalDocumentos').modal('show');
     });
-
-
 
     //para mostrarlas carreras del alumno
     $(document).on("click", ".btnCarreras", function () {
@@ -286,7 +402,6 @@ $(document).ready(function () {
     }
 
 
-
     //////////////////////////////////CARRERAS Y FACULTADES ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     var selectorFacultades = document.getElementById("selectDocumentos"); // identificamos el combobox de facultades 
@@ -302,11 +417,6 @@ $(document).ready(function () {
                 $("#selectDocumentos").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
         }
     });
-
-
-
-
-
 
 
 });
