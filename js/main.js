@@ -75,6 +75,9 @@ $(document).ready(function () {
     $("#btnNuevo").click(function () {
         $("#listaCarrerasAdd").find('li').remove();//limpiamos la lista de carreras para agregar 
         $("#listaDocumentosAdd").find('li').remove();//limpiamos la lista de documentos para agregar
+        listaDocumentos = [];//limpia los arreglos 
+        listaCarreras = []; 
+
         opcion = 1; //alta           
         user_id = null;
         $("#formAlumnos").trigger("reset");
@@ -202,7 +205,7 @@ $(document).ready(function () {
     //////////////// concatenadores
 
     function concatenarDataDocumentos() {
-        var lista = '"listaDocumentos":[';
+        var lista = '[';
         var bandera = true;
         listaDocumentos.forEach((i) => {
             if (bandera) {
@@ -218,7 +221,7 @@ $(document).ready(function () {
     }
 
     function concatenarDataCarreras() {
-        var lista = '"listaCarreras":[';
+        var lista = '[';
         var bandera = true;
         listaCarreras.forEach((i) => {
             if (bandera) {
