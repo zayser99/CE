@@ -1,7 +1,11 @@
 $(document).ready(function () {
     //inicializar los pop over
-    var listaDocumentos = [];
-    var listaCarreras = [];
+    var listaDataDocumentos = [];
+    var listaDataCarreras = [];
+
+    var listaIdDocumentos = [];
+    var listaIdCarreras = [];
+
     var user_id, opcion;
 
     //inicializar la tabla alumnos
@@ -73,10 +77,16 @@ $(document).ready(function () {
 
     //para limpiar los campos antes de dar de Alta una Persona
     $("#btnNuevo").click(function () {
-        $("#listaCarrerasAdd").find('li').remove();//limpiamos la lista de carreras para agregar 
-        $("#listaDocumentosAdd").find('li').remove();//limpiamos la lista de documentos para agregar
-        listaDocumentos = [];//limpia los arreglos 
-        listaCarreras = []; 
+        $("#listaCarrerasAdd").find('tr').remove();//limpiamos la lista de carreras para agregar 
+        $("#listaDocumentosAdd").find('tr').remove();//limpiamos la lista de documentos para agregar
+        listaDataDocumentos = [];//limpia los arreglos 
+        listaDataCarreras = [];
+
+        listaIdDocumentos = [];
+        listaIdCarreras = [];
+
+        llenarFacultades(); // se reinician los combobox de facultades y carreras
+        llenarAlmacen();// se reinician los combox de almacenes y ec
 
         opcion = 1; //alta           
         user_id = null;
@@ -136,27 +146,71 @@ $(document).ready(function () {
     $("#btnAddCarrera").click(function (clickEvent) {// evento de cuando apretamos el boton de agregar carrera 
         var carrera = $('#selectCarreras option:selected').text();
         var facultad = $('#selectFacultades option:selected').text();
-
-        var carreraId = $.trim($('#selectCarreras').val());
         var facultadId = $.trim($('#selectFacultades').val());
+        var carreraId = $.trim($('#selectCarreras').val());
         var generacion = $.trim($('#generacion').val());
         //los agregamos a los datos para subir 
-        listaCarreras.push('{"carrera_id":"' + carreraId + '","generacion":"' + generacion + '"}');
-        // lo mostramos
-        agregarCarreraAdd(carrera, facultad, generacion);
+        console.log(carreraId);
+        if (carreraId.length!=0) {
+            listaIdCarreras.push(carreraId);
+            listaDataCarreras.push('{"carrera_id":"' + carreraId + '","generacion":"' + generacion + '"}');
+            agregarCarreraAdd(carrera, facultad, generacion);// lo mostramos
+            llenarCarreras(facultadId);          
+        }else{
+            confirm("Debes selecionar una carrera");
+        }
+
     });
 
-    //agrega un renglon a la lista de documento
+
+
+    /////////////////////////////////////////// bajar de la lista de documentos 
+
+    $(document).on("click", ".btnBorrarCarreraAlumno", function () {
+        var index = $(this).closest('tr').index();
+        listaDataCarreras.splice(index, 1);
+        listaIdCarreras.splice(index, 1);
+        llenarCarreras( $.trim($('#selectFacultades').val()));
+        $(this).closest('tr').remove();
+    });
+
+
+
+
+
+    $(document).on("click", ".btnBorrarDocumentoAlumno", function () {
+        var index = $(this).closest('tr').index();
+        listaDataDocumentos.splice(index, 1);
+        listaIdDocumentos.splice(index, 1);
+        $(this).closest('tr').remove();
+    });
+
+
+
+    //agrega un renglon a la lista de carreras
     function agregarCarreraAdd(carrera, facultad, generacion) {
         let lista = document.querySelector('#listaCarrerasAdd'); // seleccionamos nuesta lista donde mostramos todo
         lista.innerHTML += ` 
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-        ${carrera} <BR>
-        ${facultad}
-        <span class="badge bg-primary rounded-pill">${generacion}</span>
-        </li>
+        <tr>
+          <th scope="row">  ${carrera}</th>
+          <td> ${facultad}</td>
+          <td> <span class="badge bg-primary rounded-pill">${generacion}</span></td>
+          <td>
+          <div class='wrapper text-center'>
+              <button type="button" class='btn btn-danger btn-sm btnBorrarCarreraAlumno' data-toggle='tooltip' title='Eliminar'>
+                  <span class='material-icons'>
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                          class="bi bi-trash-fill" viewBox="0 0 16 16">
+                          <path
+                              d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                      </svg>
+                  </span>
+              </button>
+          </div>
+        </td>
+         
+        </tr>
         `;
-
     }
 
     $("#btnAddDocumento").click(function (clickEvent) {// evento de cuando apretamos el boton de agregar documento 
@@ -164,37 +218,80 @@ $(document).ready(function () {
         var documento_id = $.trim($('#selectDocumentos').val());
         var documento_cantidad = $.trim($('#selectCantidad').val());
         var documento_estado = $.trim($('#selectEstados').val());
-
-        listaDocumentos.push('{"documento_id":"' + documento_id + '","cantidad":"' + documento_cantidad + '","estado":"' + documento_estado + '"}');
+        listaIdDocumentos.push(documento_id);
+        listaDataDocumentos.push('{"documento_id":"' + documento_id + '","cantidad":"' + documento_cantidad + '","estado":"' + documento_estado + '"}');
         // lo mostramos
         agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado);
     });
 
-    //agrega un renglon a la lista de carreras
+    //agrega un renglon a la lista de documentos
     function agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado) {
         let lista = document.querySelector('#listaDocumentosAdd'); // seleccionamos nuesta lista donde mostramos todo
         if (documento_estado == "A") { //mostramos segun la condicion
-            lista.innerHTML += `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                ${documento_nombre}
-                <span class="badge rounded-pill text-bg-success">BUEN ESTADO</span>
-                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
-                </li>`;
+            lista.innerHTML += ` 
+                <tr>
+                  <th scope="row"> ${documento_nombre}</th>
+                  <td><span class="badge rounded-pill text-bg-success">BUEN ESTADO</span></td>
+                  <td><span class="badge bg-primary rounded-pill">${documento_cantidad}</span></td>
+                  <td>
+                  <div class='wrapper text-center'>
+                      <button type="button" class='btn btn-danger btn-sm btnBorrarDocumentoAlumno' data-toggle='tooltip' title='Eliminar'>
+                          <span class='material-icons'>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                  <path
+                                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg>
+                          </span>
+                      </button>
+                  </div>
+                </td>   
+                </tr>
+                `;
+
         } else if (documento_estado == "B") {
-            lista.innerHTML += `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                ${documento_nombre}
-                <span class="badge rounded-pill text-bg-warning">DAÑADO</span>
-                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
-                </li>`;
+            lista.innerHTML += ` 
+                <tr>
+                  <th scope="row"> ${documento_nombre}</th>
+                  <td><span class="badge rounded-pill text-bg-warning">DAÑADO</span></td>
+                  <td><span class="badge bg-primary rounded-pill">${documento_cantidad}</span></td>
+                  <td>
+                  <div class='wrapper text-center'>
+                      <button type="button" class='btn btn-danger btn-sm btnBorrarDocumentoAlumno' data-toggle='tooltip' title='Eliminar'>
+                          <span class='material-icons'>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                  <path
+                                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg>
+                          </span>
+                      </button>
+                  </div>
+                </td>   
+                </tr>
+                `;
         }
         else if (documento_estado == "C") {
-            lista.innerHTML += `
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                ${documento_nombre}
-                <span class="badge rounded-pill text-bg-danger">ILEGIBLE</span>
-                <span class="badge bg-primary rounded-pill">${documento_cantidad}</span>
-                </li>`;
+            lista.innerHTML += ` 
+                <tr>
+                  <th scope="row"> ${documento_nombre}</th>
+                  <td><span class="badge rounded-pill text-bg-danger">ILEGIBLE</span></td>
+                  <td><span class="badge bg-primary rounded-pill">${documento_cantidad}</span></td>
+                  <td>
+                  <div class='wrapper text-center'>
+                      <button type="button" class='btn btn-danger btn-sm btnBorrarDocumentoAlumno' data-toggle='tooltip' title='Eliminar'>
+                          <span class='material-icons'>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                  class="bi bi-trash-fill" viewBox="0 0 16 16">
+                                  <path
+                                      d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z" />
+                              </svg>
+                          </span>
+                      </button>
+                  </div>
+                </td>   
+                </tr>
+                `;
         }
     }
 
@@ -207,7 +304,7 @@ $(document).ready(function () {
     function concatenarDataDocumentos() {
         var lista = '[';
         var bandera = true;
-        listaDocumentos.forEach((i) => {
+        listaDataDocumentos.forEach((i) => {
             if (bandera) {
                 lista += i;
                 bandera = false;
@@ -223,7 +320,7 @@ $(document).ready(function () {
     function concatenarDataCarreras() {
         var lista = '[';
         var bandera = true;
-        listaCarreras.forEach((i) => {
+        listaDataCarreras.forEach((i) => {
             if (bandera) {
                 lista += i;
                 bandera = false;
@@ -338,25 +435,28 @@ $(document).ready(function () {
 
     //////////////////////////////////AlmacenS Y EC ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var selectorAlmacenes = document.getElementById("selectAlmacen"); // identificamos el combobox de Almacenes 
-    // llenamos los combobox facultades
-    $.getJSON('serverside/serversideAlmacenes.php', function (results) {// consultamos las Almacenes 
-        var esprimero = true; //declaramos la bariable que no servira como bandera
-        for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de Almacenes
-            if (esprimero) { // si es la primera entnces la dejamos seleccionada 
-                $("#selectAlmacen").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                esprimero = false;//ponemos la bandera en falso 
-                llenarEC(selectorAlmacenes.value);// procedemos a llenar el combobox de EC con la primera opcionen de facultades 
+    function llenarAlmacen() {
+        $("#selectAlmacen").find('option').remove();
+        var selectorAlmacenes = document.getElementById("selectAlmacen"); // identificamos el combobox de Almacenes 
+        // llenamos los combobox facultades
+        $.getJSON('serverside/serversideAlmacenes.php', function (results) {// consultamos las Almacenes 
+            var esprimero = true; //declaramos la bariable que no servira como bandera
+            for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de Almacenes
+                if (esprimero) { // si es la primera entnces la dejamos seleccionada 
+                    $("#selectAlmacen").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                    esprimero = false;//ponemos la bandera en falso 
+                    llenarEC(selectorAlmacenes.value);// procedemos a llenar el combobox de EC con la primera opcionen de facultades 
+                }
+                else// todas las demas opciones quedan seleccionadas 
+                    $("#selectAlmacen").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
+
             }
-            else// todas las demas opciones quedan seleccionadas 
-                $("#selectAlmacen").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
+        });
 
-        }
-    });
-
-    selectorAlmacenes.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de EC con la nueva informacion 
-        llenarEC(e.target.value);
-    });
+        selectorAlmacenes.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de EC con la nueva informacion 
+            llenarEC(e.target.value);
+        });
+    }
 
     //llenamos los combobox EC 
     function llenarEC(idAlmacen) {
@@ -371,26 +471,29 @@ $(document).ready(function () {
     }
 
     //////////////////////////////////CARRERAS Y FACULTADES ////////////////////////////////////////////////////////////////////////////////////////////////////////
+    function llenarFacultades() {
+        $("#selectFacultades").find('option').remove();
+        var selectorFacultades = document.getElementById("selectFacultades"); // identificamos el combobox de facultades 
+        // llenamos los combobox facultades
+        $.getJSON('serverside/serversideFacultades.php', function (results) {// consultamos las facultades 
+            var esprimero = true; //declaramos la bariable que no servira como bandera
+            for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data  de facultades
+                if (esprimero) { // si es la primera entnces la dejamos seleccionada 
+                    $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                    esprimero = false;//ponemos la bandera en falso 
+                    llenarCarreras(results['aaData'][i][0]);// procedemos a llenar el combobox de carreras con la primera opcionen de facultades 
+                }
+                else// todas las demas opciones quedan seleccionadas 
+                    $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
 
-    var selectorFacultades = document.getElementById("selectFacultades"); // identificamos el combobox de facultades 
-    // llenamos los combobox facultades
-    $.getJSON('serverside/serversideFacultades.php', function (results) {// consultamos las facultades 
-        var esprimero = true; //declaramos la bariable que no servira como bandera
-        for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data  de facultades
-            if (esprimero) { // si es la primera entnces la dejamos seleccionada 
-                $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                esprimero = false;//ponemos la bandera en falso 
-                llenarCarreras(results['aaData'][i][0]);// procedemos a llenar el combobox de carreras con la primera opcionen de facultades 
             }
-            else// todas las demas opciones quedan seleccionadas 
-                $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
+        });
 
-        }
-    });
+        selectorFacultades.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de carrera con la nueva informacion 
+            llenarCarreras(e.target.value);
+        });
 
-    selectorFacultades.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de carrera con la nueva informacion 
-        llenarCarreras(e.target.value);
-    });
+    }
 
     //llenamos los combobox carreras 
     function llenarCarreras(idfacultad) {
@@ -398,16 +501,17 @@ $(document).ready(function () {
         $.getJSON('serverside/serversideCarreras.php', function (results) {// consultamos las carreras 
             for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de carreras
                 if (results['aaData'][i][3] == idfacultad) {// si la informacion es de la facultas que queremos lo agregamos al select 
-                    $("#selectCarreras").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                    if (!listaIdCarreras.includes( results['aaData'][i][0])) {
+                        $("#selectCarreras").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                    } 
                 }
             }
         });
     }
 
 
-    //////////////////////////////////CARRERAS Y FACULTADES ////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    var selectorFacultades = document.getElementById("selectDocumentos"); // identificamos el combobox de facultades 
+    //////////////////////////////////DOCUMENTOS////////////////////////////////////////////////////////////////////////////////////////////////////////
     // llenamos los combobox facultades
     $.getJSON('serverside/serversideDocumentos.php', function (results) {// consultamos las facultades 
         var esprimero = true; //declaramos la bariable que no servira como bandera
