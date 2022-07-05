@@ -87,6 +87,7 @@ $(document).ready(function () {
 
         llenarFacultades(); // se reinician los combobox de facultades y carreras
         llenarAlmacen();// se reinician los combox de almacenes y ec
+        llenarDocumentos();// reiniciamos el de documentos
 
         opcion = 1; //alta           
         user_id = null;
@@ -101,19 +102,26 @@ $(document).ready(function () {
     $(document).on("click", ".btnEditar", function () {
         opcion = 2;//editar
         fila = $(this).closest("tr");
-        user_id = parseInt(fila.find('td:eq(0)').text()); //capturo el ID		            
-        matricula = fila.find('td:eq(1)').text();
-        nombre = fila.find('td:eq(2)').text();
-        apellido = fila.find('td:eq(3)').text();
-        gender = fila.find('td:eq(4)').text();
-        password = fila.find('td:eq(5)').text();
-        status = fila.find('td:eq(6)').text();
+        tablaAlumnos.column(0).visible(1);//ponemos visible el id para consultarl
+        alumno_id = parseInt($(this).closest('tr').find('td:eq(0)').text());
+        tablaAlumnos.column(0).visible(0);//lo volvemos a ocultar	
+
+        matricula = fila.find('td:eq(0)').text();
+        nombre = fila.find('td:eq(1)').text();
+        apellido = fila.find('td:eq(2)').text();
+
+        tablaAlumnos.column(4).visible(1);//ponemos visible el id para consultarl
+        ecid = parseInt($(this).closest('tr').find('td:eq(3)').text());
+        tablaAlumnos.column(4).visible(0);//lo volvemos a ocultar	
+        
+        
+        llenarAlmacen();// se reinician los combox de almacenes y ec
+
         $("#matricula").val(matricula);
         $("#nombre").val(nombre);
         $("#apellido").val(apellido);
-        $("#gender").val(gender);
-        $("#password").val(password);
-        $("#status").val(status);
+
+
         $(".modal-header").css("background-color", "#512DA8");
         $(".modal-header").css("color", "white");
         $(".modal-title").text("Editar Usuario");
@@ -150,13 +158,12 @@ $(document).ready(function () {
         var carreraId = $.trim($('#selectCarreras').val());
         var generacion = $.trim($('#generacion').val());
         //los agregamos a los datos para subir 
-        console.log(carreraId);
-        if (carreraId.length!=0) {
+        if (carreraId.length != 0) {
             listaIdCarreras.push(carreraId);
             listaDataCarreras.push('{"carrera_id":"' + carreraId + '","generacion":"' + generacion + '"}');
             agregarCarreraAdd(carrera, facultad, generacion);// lo mostramos
-            llenarCarreras(facultadId);          
-        }else{
+            llenarCarreras(facultadId);
+        } else {
             confirm("Debes selecionar una carrera");
         }
 
@@ -170,7 +177,7 @@ $(document).ready(function () {
         var index = $(this).closest('tr').index();
         listaDataCarreras.splice(index, 1);
         listaIdCarreras.splice(index, 1);
-        llenarCarreras( $.trim($('#selectFacultades').val()));
+        llenarCarreras($.trim($('#selectFacultades').val()));
         $(this).closest('tr').remove();
     });
 
@@ -182,6 +189,7 @@ $(document).ready(function () {
         var index = $(this).closest('tr').index();
         listaDataDocumentos.splice(index, 1);
         listaIdDocumentos.splice(index, 1);
+        llenarDocumentos();
         $(this).closest('tr').remove();
     });
 
@@ -218,10 +226,17 @@ $(document).ready(function () {
         var documento_id = $.trim($('#selectDocumentos').val());
         var documento_cantidad = $.trim($('#selectCantidad').val());
         var documento_estado = $.trim($('#selectEstados').val());
-        listaIdDocumentos.push(documento_id);
-        listaDataDocumentos.push('{"documento_id":"' + documento_id + '","cantidad":"' + documento_cantidad + '","estado":"' + documento_estado + '"}');
-        // lo mostramos
-        agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado);
+
+        //los agregamos a los datos para subir 
+        if (documento_id.length != 0) {
+            listaIdDocumentos.push(documento_id);
+            listaDataDocumentos.push('{"documento_id":"' + documento_id + '","cantidad":"' + documento_cantidad + '","estado":"' + documento_estado + '"}');
+            // lo mostramos
+            agregarDocumentoAdd(documento_nombre, documento_cantidad, documento_estado);
+            llenarDocumentos();
+        } else {
+            confirm("Debes selecionar un documento");
+        }
     });
 
     //agrega un renglon a la lista de documentos
@@ -463,9 +478,9 @@ $(document).ready(function () {
         $("#selectEC").find('option').remove();//limpia el select cada que cada que se ejucta el metodo para no tener datos erroneos 
         $.getJSON('serverside/serversideEC.php', function (results) {// consultamos las EC 
             for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de EC
-                if (results['aaData'][i][2] == idAlmacen) {// si la informacion es de la facultas que queremos lo agregamos al select 
+                 if (results['aaData'][i][2] == idAlmacen) {// si la informacion es de la facultas que queremos lo agregamos al select 
                     $("#selectEC").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                }
+                 }
             }
         });
     }
@@ -501,9 +516,9 @@ $(document).ready(function () {
         $.getJSON('serverside/serversideCarreras.php', function (results) {// consultamos las carreras 
             for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de carreras
                 if (results['aaData'][i][3] == idfacultad) {// si la informacion es de la facultas que queremos lo agregamos al select 
-                    if (!listaIdCarreras.includes( results['aaData'][i][0])) {
+                    if (!listaIdCarreras.includes(results['aaData'][i][0])) {
                         $("#selectCarreras").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                    } 
+                    }
                 }
             }
         });
@@ -513,18 +528,26 @@ $(document).ready(function () {
 
     //////////////////////////////////DOCUMENTOS////////////////////////////////////////////////////////////////////////////////////////////////////////
     // llenamos los combobox facultades
-    $.getJSON('serverside/serversideDocumentos.php', function (results) {// consultamos las facultades 
-        var esprimero = true; //declaramos la bariable que no servira como bandera
-        for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data  de facultades
-            if (esprimero) { // si es la primera entnces la dejamos seleccionada 
-                $("#selectDocumentos").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                esprimero = false;//ponemos la bandera en falso 
-            }
-            else// todas las demas opciones quedan seleccionadas 
-                $("#selectDocumentos").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
-        }
-    });
 
+    function llenarDocumentos() {
+        console.log(listaIdDocumentos);
+        $("#selectDocumentos").find('option').remove();//limpia el select cada que cada que se ejucta el metodo para no tener datos erroneos 
+        $.getJSON('serverside/serversideDocumentos.php', function (results) {// consultamos las facultades 
+            var esprimero = true; //declaramos la bariable que no servira como bandera
+            for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data  de facultades
+                if (!listaIdDocumentos.includes(results['aaData'][i][0])) {
+                    if (esprimero) { // si es la primera entnces la dejamos seleccionada 
+                        $("#selectDocumentos").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
+                        esprimero = false;//ponemos la bandera en falso 
+                    }
+                    else// todas las demas opciones quedan seleccionadas 
+                        $("#selectDocumentos").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
+                }
+            }
+
+
+        });
+    }
 
 });
 

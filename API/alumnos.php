@@ -58,9 +58,17 @@ switch ($opcion) {
         break;
 
     case 2:
-        $consulta = "UPDATE alumno SET username='$username', first_name='$first_name', apellido='$apellido', ec='$ec', listaCarreras='$listaCarreras', listaCarreras='$listaCarreras' WHERE alumno_id='$alumno_id' ";
+        //actualizamos los datos normales
+        $consulta = "UPDATE alumno SET alumno_matricula='$matricula', alumno_nombre='$nombre', alumno_apellido='$apellido', ec_id='$ec'  WHERE alumno_id='$alumno_id' ";
         $resultado = $conexion->prepare($consulta);
         $resultado->execute();
+
+        //actualizamos las carreras 
+
+
+        //actualizamos los ducumentos
+
+
 
         $consulta = "SELECT * FROM alumno WHERE alumno_id='$alumno_id' ";
         $resultado = $conexion->prepare($consulta);
