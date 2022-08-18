@@ -113,9 +113,13 @@ $(document).ready(function () {
         tablaAlumnos.column(4).visible(1);//ponemos visible el id para consultarl
         ecid = parseInt($(this).closest('tr').find('td:eq(3)').text());
         tablaAlumnos.column(4).visible(0);//lo volvemos a ocultar	
-        
-        
-        llenarAlmacen();// se reinician los combox de almacenes y ec
+
+
+        tablaAlumnos.column(6).visible(1);//ponemos visible el id para consultarl
+        almacenid = parseInt($(this).closest('tr').find('td:eq(4)').text());
+        tablaAlumnos.column(6).visible(0);//lo volvemos a ocultar	
+
+
 
         $("#matricula").val(matricula);
         $("#nombre").val(nombre);
@@ -446,10 +450,10 @@ $(document).ready(function () {
     // escondemos las filas donde estan las ID Que no queremos estar moestrando
     tablaAlumnos.column(0).visible(0);
     tablaAlumnos.column(4).visible(0);
+    tablaAlumnos.column(6).visible(0);
 
 
     //////////////////////////////////AlmacenS Y EC ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
     function llenarAlmacen() {
         $("#selectAlmacen").find('option').remove();
         var selectorAlmacenes = document.getElementById("selectAlmacen"); // identificamos el combobox de Almacenes 
@@ -464,10 +468,8 @@ $(document).ready(function () {
                 }
                 else// todas las demas opciones quedan seleccionadas 
                     $("#selectAlmacen").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
-
             }
         });
-
         selectorAlmacenes.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de EC con la nueva informacion 
             llenarEC(e.target.value);
         });
@@ -478,9 +480,9 @@ $(document).ready(function () {
         $("#selectEC").find('option').remove();//limpia el select cada que cada que se ejucta el metodo para no tener datos erroneos 
         $.getJSON('serverside/serversideEC.php', function (results) {// consultamos las EC 
             for (var i = 0; i < results['aaData'].length; i++) {//recorremos la data de EC
-                 if (results['aaData'][i][2] == idAlmacen) {// si la informacion es de la facultas que queremos lo agregamos al select 
+                if (results['aaData'][i][2] == idAlmacen) {// si la informacion es de la facultas que queremos lo agregamos al select 
                     $("#selectEC").prepend("<option value='" + results['aaData'][i][0] + "' selected='selected'>" + results['aaData'][i][1] + "</option>");
-                 }
+                }
             }
         });
     }
@@ -500,15 +502,13 @@ $(document).ready(function () {
                 }
                 else// todas las demas opciones quedan seleccionadas 
                     $("#selectFacultades").prepend("<option value='" + results['aaData'][i][0] + "'>" + results['aaData'][i][1] + "</option>");
-
             }
         });
-
         selectorFacultades.addEventListener('change', (e) => {// si el selector de facultades cambia de opcion actualizamos al de carrera con la nueva informacion 
             llenarCarreras(e.target.value);
         });
-
     }
+
 
     //llenamos los combobox carreras 
     function llenarCarreras(idfacultad) {
