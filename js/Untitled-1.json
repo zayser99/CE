@@ -1,0 +1,23 @@
+{"listaDocumentos":[
+    {
+        "documento_id": "1",
+        "cantidad": "1",
+        "estado": "A"
+    },
+    {
+        "documento_id": "3",
+        "cantidad": "1",
+        "estado": "A"
+    },
+    {
+        "documento_id": "2",
+        "cantidad": "1",
+        "estado": "A"
+    },
+    {
+        "documento_id": "4",
+        "cantidad": "1",
+        "estado": "A"
+    }
+]
+}

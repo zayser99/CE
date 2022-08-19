@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <title>Title</title>
+    <title>ALUMNOS</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -42,11 +42,14 @@
                         style="width:100%">
                         <thead class="text-center">
                             <tr>
-                                <th>ID</th>
+                                <th>ID</th> <!-- oculto -->
                                 <th>MATRICULA</th>
                                 <th>NOMBRE</th>
                                 <th>APELLIDO</th>
+                                <th>EC id</th> <!-- oculto -->
                                 <th>EC</th>
+                                <th>SALA id</th> <!-- oculto -->
+                                <th>SALA</th>
                                 <th>CARRERAS</th>
                                 <th>DOCUMENTOS</th>
                                 <th>Acciones</th>
@@ -67,7 +70,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel"></h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
                             aria-hidden="true">&times;</span>
                     </button>
                 </div>
@@ -77,7 +80,7 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">MATRICULA:</label>
-                                    <input type="text" class="form-control" id="username">
+                                    <input type="text" class="form-control" id="matricula">
                                 </div>
                             </div>
 
@@ -86,61 +89,136 @@
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">NOMBRE:</label>
-                                    <input type="text" class="form-control" id="last_name">
+                                    <input type="text" class="form-control" id="nombre">
                                 </div>
                             </div>
                             <div class="col-lg-6">
                                 <div class="form-group">
                                     <label for="" class="col-form-label">APELLIDO:</label>
-                                    <input type="text" class="form-control" id="gender">
+                                    <input type="text" class="form-control" id="apellido">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">ALMACEN:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectAlmacen">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">EC:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectEC">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr> <!--  linea divisora  -->
+                        <h5>CARRERAS</h5> <!-- titulo -->
+                        <div class="row">
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">FACULTAD:</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selectFacultades">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">CARRERA:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectCarreras">
+                                    </select>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-lg-8">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">GENERACION:</label>
+                                    <input type="number" id="generacion" min="1900" max="2099" step="1" value="2022"
+                                        class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div class="row align-items-center">
+                                    <label for="" class="col-form-label">AGREGAR:</label>
+                                    <button type="button" class='btn btn-outline-success' id="btnAddCarrera"
+                                        data-toggle='tooltip' title='btnAddcarrera'>
+                                        <span class='material-icons'>+</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <label for="" class="col-form-label">LISTA: </label>
+                                <table class="table">
+                                    <tbody id="listaCarrerasAdd">     <!-- la tabla que tiene la lista de carreras que se moestraran -->
+                                    </tbody>
+                                </table>
+                                </ul>
+                            </div>
+                        </div>
+
+
+                        <hr> <!--  linea divisora  -->
+                        <h5>DOCUMENTOS</h5> <!-- titulo -->
+                        <div class="row">
+                            <div class="col-lg-9">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">DOCUMENTO:</label>
+                                    <select class="form-select" aria-label="Default select example"
+                                        id="selectDocumentos">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                <div class="form-group">
+                                    <label for="" class="col-form-label">CANTIDAD:</label>
+                                    <input type="number" id="selectCantidad" value="1" class="form-control">
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-lg-9">
                                 <div class="form-group">
-                                    <label for="" class="col-form-label">BODEGA</label>
-                                    <input type="text" class="form-control" id="password">
+                                    <label for="" class="col-form-label">ESTADO:</label>
+                                    <select class="form-select" aria-label="Default select example" id="selectEstados">
+                                        <option value="A">BUEN ESTADO</option>
+                                        <option value="B">DAÑADO</option>
+                                        <option value="C">ILEGIBLE</option>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">EC</label>
-                                    <input type="number" class="form-control" id="status">
+                                <div class="row align-items-center">
+                                    <label for="" class="col-form-label">AGREGAR:</label>
+                                    <button type="button" class='btn btn-outline-success' id="btnAddDocumento"
+                                        data-toggle='tooltip' title='btnAddDocumento'>
+                                        <span class='material-icons'>+</span>
+                                    </button>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">CARRERA</label>
-                                    <input type="text" class="form-control" id="carr">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <label for="" class="col-form-label">LISTA: </label>
+                                    <table class="table">
+                                        <tbody id="listaDocumentosAdd">  <!-- la tabla que tiene la lista de documentos que se moestraran -->
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">CANTIDAD</label>
-                                    <input type="number" class="form-control" id="cant">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-9">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">DOCUMENTOS</label>
-                                    <input type="text" class="form-control" id="docs">
-                                </div>
-                            </div>
-                            <div class="col-lg-3">
-                                <div class="form-group">
-                                    <label for="" class="col-form-label">CANTIDAD</label>
-                                    <input type="number" class="form-control" id="cantdoc">
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-light" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
                         <button type="submit" id="btnGuardar" class="btn btn-dark">Guardar</button>
                     </div>
                 </form>
@@ -148,10 +226,52 @@
         </div>
     </div>
 
-    <button type="button" class="btn btn-secondary" data-bs-toggle="popover" data-bs-placement="bottom" title="Documentos"
-        data-bs-content="Lista de Documentos">
-        DOCUMENTOS
-    </button>
+
+    <!--Modal para documentos-->
+    <div class="modal fade" id="modalDocumentos" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyDocumentos">
+                    <ul class="list-group" id="listaDocumentos">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--Modal para carreras-->
+    <div class="modal fade" id="modalCarreras" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel"></h5>
+                    <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span
+                            aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="bodyCarreras">
+                    <ul class="list-group" id="listaCarreras">
+                    </ul>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">CERRAR</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
 
 
     <!-- Jquery -->
